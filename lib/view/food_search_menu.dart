@@ -22,26 +22,39 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.yellow[200],
-            title: TextField(
-            controller: controller,
-            onChanged: (val) => viewModel.searchFood(controller.text),
-            decoration: const InputDecoration(
-              hintText: 'Search...',
-              hintStyle: TextStyle(color: Colors.grey ),
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.search,color: Colors.grey,),
-            ),
-          ),),
-          body: foodList.isEmpty? const Center(child: Text('No items found')): viewType(viewModel, foodList),
-          floatingActionButton: Consumer<FoodViewModel>(
-            builder: (context, viewModel, child) {
-              return FloatingActionButton(
-                onPressed: () => viewModel.toggleViewType(),
-                backgroundColor: Colors.orange,
-                tooltip: viewModel.viewType == ViewType.grid ? "Switch to List View" : "Switch to Grid View",
-                child: Icon(viewModel.viewType == ViewType.grid ? Icons.view_list : Icons.grid_view,color: Colors.white,),
-              );
-            },
+            title: Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                TextField(
+                  controller: controller,
+                  onChanged: (val) { 
+                    viewModel.searchFood(controller.text);
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    hintStyle: TextStyle(color: Colors.grey ),
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search,color: Colors.grey,),
+                  ),
+                ),
+                Visibility(
+                  visible: controller.text.isNotEmpty,
+                  child: IconButton(
+                    icon: const Icon(Icons.clear, color: Colors.grey),
+                    onPressed: () {
+                      controller.clear();
+                      viewModel.searchFood('');
+                    },
+                  ),
+                )
+              ],
+            ),),
+          body: foodList.isEmpty? const Center(child: Text('No items found')): viewModel.loading == true ? const Center(child: Text('Loading ...')) : viewType(viewModel, foodList),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => viewModel.toggleViewType(),
+            backgroundColor: Colors.orange,
+            tooltip: viewModel.viewType == ViewType.grid ? "Switch to List View" : "Switch to Grid View",
+            child: Icon(viewModel.viewType == ViewType.grid ? Icons.view_list : Icons.grid_view,color: Colors.white,),
           ),
         );
       } 

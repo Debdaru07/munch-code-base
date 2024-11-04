@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../model/food_model.dart';
+
 class FoodDetails extends StatefulWidget {
-  const FoodDetails({super.key});
+  final Food food;
+  const FoodDetails({super.key, required this.food});
 
   @override
   State<FoodDetails> createState() => _FoodDetailsState();
@@ -10,6 +13,9 @@ class FoodDetails extends StatefulWidget {
 class _FoodDetailsState extends State<FoodDetails> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: Text('data'),),
+    );
   }
 }

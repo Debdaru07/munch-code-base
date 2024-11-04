@@ -39,19 +39,22 @@ class FoodViewModel extends ChangeNotifier {
 
   setLoading(bool value) {
     _loading = value;
-  }
-  void searchFood(String query) async{
-    List<Food> searchItems = [];
-    setLoading(true);
-    searchItems = foodItems.where((food) {
-      return food.name.toLowerCase().contains(query.toLowerCase()) ||
-          food.category.toLowerCase().contains(query.toLowerCase()) ||
-          food.businessName.toLowerCase().contains(query.toLowerCase());
-    }).toList();
-    setFoodItems(searchItems);
-    await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
-    setLoading(false);
     notifyListeners();
+  }
+  void searchFood(String query) async {
+    List<Food> searchItems = [];
+    Future.delayed(Duration.zero, () async {
+      setLoading(true);
+      await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+      searchItems = foodItems.where((food) {
+        return food.name.toLowerCase().contains(query.toLowerCase()) ||
+            food.category.toLowerCase().contains(query.toLowerCase()) ||
+            food.businessName.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+      setFoodItems(searchItems);
+      setLoading(false);
+      notifyListeners();
+    });
   }
   
   ViewType _viewType = ViewType.grid;
