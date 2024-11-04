@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../helpers/helper_widget.dart';
 import '../model/food_model.dart';
 import '../view_model/search_food_view_model.dart';
+import 'cart_checkout.dart';
 import 'food_details/food_details_page.dart';
 
 class FoodDeliveryListing extends StatefulWidget {
@@ -67,11 +68,10 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: FloatingActionButton(
-                  onPressed: () {
-                    log("Additional Action");
+                  onPressed: () async {
+                    // await Navigator.push( context, MaterialPageRoute( builder: (context) => CartCheckout(cartItems: viewModel.cartItems,), ),);
                   },
                   backgroundColor: Colors.orange,
-                  tooltip: "Additional Action",
                   child: const Icon(CupertinoIcons.shopping_cart, color: Colors.white),
                 ),
               ),
