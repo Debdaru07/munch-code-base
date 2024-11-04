@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../helpers/helper_widget.dart';
 import '../model/food_model.dart';
 import '../view_model/search_food_view_model.dart';
+import 'food_details/food_details_page.dart';
 
 class FoodDeliveryListing extends StatefulWidget {
   const FoodDeliveryListing({super.key});
@@ -50,7 +51,10 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
                 )
               ],
             ),),
-          body: foodList.isEmpty? const Center(child: Text('No items found')): viewModel.loading == true ? const FoodLoader() : viewType(viewModel, foodList),
+          body: 
+            foodList.isEmpty? const Center(child: Text('No items found'))
+              : viewModel.loading == true ? const FoodLoader() 
+                : viewType(viewModel, foodList),
           floatingActionButton: FloatingActionButton(
             onPressed: () => viewModel.toggleViewType(),
             backgroundColor: Colors.orange,
@@ -62,16 +66,25 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
     );
   }
 
+  void ontapHandler(Food food) => showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+    builder: (BuildContext context) => FoodDetails(food: food,)
+  );
+
   Widget viewType(FoodViewModel viewModel, List<Food> foodList) => viewModel.viewType == ViewType.grid ? gridView(foodList) : listView(foodList);
 
-  Widget listViewCard(Food food) => ListTile(
-    leading: Image.asset(
-      food.thumNailAssetPath,
-      width: 50,
-      height: 50,
+  Widget listViewCard(Food food) => InkWell(
+    onTap: () => ontapHandler(food),
+    child: ListTile(
+      leading: Image.asset(
+        food.thumNailAssetPath,
+        width: 50,
+        height: 50,
+      ),
+      title: Text(food.name),
+      subtitle: Text('${food.category} - ${food.businessName} - ${food.foodType} - ${food.ratings}⭐'),
     ),
-    title: Text(food.name),
-    subtitle: Text('${food.category} - ${food.businessName} - ${food.foodType} - ${food.ratings}⭐'),
   );
 
   Widget listView(List<Food> foodList) => ListView.builder(
@@ -93,15 +106,18 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
     itemBuilder: (context, index) {
       final food = foodList[index];
 
-      return Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            imageGridViewThumbnail(food.thumNailAssetPath),
-            otherBodyContentGridView(food)
-          ],
+      return InkWell(
+        onTap: () => ontapHandler(food),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              imageGridViewThumbnail(food.thumNailAssetPath),
+              otherBodyContentGridView(food)
+            ],
+          ),
         ),
       );
     },
