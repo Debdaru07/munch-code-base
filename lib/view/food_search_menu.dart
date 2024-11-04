@@ -63,7 +63,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if (viewModel.viewType == ViewType.grid)
+              if (viewModel.cartItems.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: FloatingActionButton(

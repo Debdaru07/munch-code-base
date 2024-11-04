@@ -74,7 +74,9 @@ class _FoodDetailsState extends State<FoodDetails> {
                       child: const Text( 'Add to Cart', style: TextStyle(color: Colors.black),),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.yellow[700],
                         shape: RoundedRectangleBorder(

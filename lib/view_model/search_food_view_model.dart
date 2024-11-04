@@ -73,4 +73,9 @@ class FoodViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  resetCartItems() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+
 }
