@@ -11,7 +11,7 @@ class FoodDetails extends StatefulWidget {
 }
 
 class _FoodDetailsState extends State<FoodDetails> {
-  var description = 'This mouth-watering vegan burger combines a hearty chickpea patty with fresh lettuce, juicy tomatoes, and a tangy vegan mayo. Topped with crisp onions and served on a toasted whole-grain bun, it’s a wholesome and satisfying meal packed with flavor';
+  var description = "This mouth-watering dish combines a hearty chickpea patty with fresh lettuce, juicy tomatoes, and a tangy vegan mayo. Topped with crisp onions and served on a toasted whole-grain bun, it's a wholesome and satisfying meal packed with flavor";
   
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,6 @@ class _FoodDetailsState extends State<FoodDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image Section
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: Image.asset(
@@ -55,24 +54,18 @@ class _FoodDetailsState extends State<FoodDetails> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
-                  child: const Text(
-                    'Cart',
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: const Text( 'Add to Cart', style: TextStyle(color: Colors.black),),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Colors.yellow[700],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
-                  child: const Text(
-                    'Order',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: const Text('Order', style: TextStyle(color: Colors.white),),
                 ),
               ],
             ),

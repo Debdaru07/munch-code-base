@@ -73,7 +73,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
     await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
-      builder: (BuildContext context) => FoodDetails(food: food,)
+      builder: (BuildContext context) => FractionallySizedBox(heightFactor: 1,child: FoodDetails(food: food,))
     );
   }
 
