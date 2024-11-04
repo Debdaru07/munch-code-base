@@ -24,32 +24,34 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.yellow[200],
-            title: Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                TextField(
-                  controller: controller,
-                  onChanged: (val) { 
-                    viewModel.searchFood(controller.text);
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    hintStyle: TextStyle(color: Colors.grey ),
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search,color: Colors.grey,),
-                  ),
-                ),
-                Visibility(
-                  visible: controller.text.isNotEmpty,
-                  child: IconButton(
-                    icon: const Icon(Icons.clear, color: Colors.grey),
-                    onPressed: () {
-                      controller.clear();
-                      viewModel.searchFood('');
+            title: SingleChildScrollView(
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  TextField(
+                    controller: controller,
+                    onChanged: (val) { 
+                      viewModel.searchFood(controller.text);
                     },
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.grey ),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search,color: Colors.grey,),
+                    ),
                   ),
-                )
-              ],
+                  Visibility(
+                    visible: controller.text.isNotEmpty,
+                    child: IconButton(
+                      icon: const Icon(Icons.clear, color: Colors.grey),
+                      onPressed: () {
+                        controller.clear();
+                        viewModel.searchFood('');
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),),
           body: 
             foodList.isEmpty? const Center(child: Text('No items found'))
@@ -66,11 +68,14 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
     );
   }
 
-  void ontapHandler(Food food) => showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
-    builder: (BuildContext context) => FoodDetails(food: food,)
-  );
+  void ontapHandler(Food food) async { 
+    FocusScope.of(context).unfocus();
+    await showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+      builder: (BuildContext context) => FoodDetails(food: food,)
+    );
+  }
 
   Widget viewType(FoodViewModel viewModel, List<Food> foodList) => viewModel.viewType == ViewType.grid ? gridView(foodList) : listView(foodList);
 
