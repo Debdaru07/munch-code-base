@@ -32,7 +32,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
               prefixIcon: Icon(Icons.search,color: Colors.grey,),
             ),
           ),),
-          body: Expanded(child: foodList.isEmpty? const Center(child: Text('No items found')): viewModel.viewType == ViewType.grid ? gridView(foodList) : listView(foodList)),
+          body: Expanded(child: foodList.isEmpty? const Center(child: Text('No items found')): viewType(viewModel, foodList)),
           floatingActionButton: Consumer<FoodViewModel>(
             builder: (context, viewModel, child) {
               return FloatingActionButton(
@@ -47,6 +47,8 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
       } 
     );
   }
+
+  Widget viewType(FoodViewModel viewModel, List<Food> foodList) => viewModel.viewType == ViewType.grid ? gridView(foodList) : listView(foodList);
 
   Widget listViewCard(Food food) => ListTile(
     leading: Image.asset(
