@@ -59,8 +59,17 @@ class FoodViewModel extends ChangeNotifier {
   
   ViewType _viewType = ViewType.grid;
   ViewType get viewType => _viewType;
+
   void toggleViewType() {
     _viewType = _viewType == ViewType.grid ? ViewType.list : ViewType.grid;
+    notifyListeners();
+  }
+
+  List<Food> _cartItems = [];
+  List<Food> get cartItems => _cartItems;
+  
+  setCartItems(Food value) {
+    _cartItems.add(value);
     notifyListeners();
   }
 

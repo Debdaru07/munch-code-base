@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helpers/helper_widget.dart';
@@ -57,11 +60,28 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
             foodList.isEmpty? const Center(child: Text('No items found'))
               : viewModel.loading == true ? const FoodLoader() 
                 : viewType(viewModel, foodList),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => viewModel.toggleViewType(),
-            backgroundColor: Colors.orange,
-            tooltip: viewModel.viewType == ViewType.grid ? "Switch to List View" : "Switch to Grid View",
-            child: Icon(viewModel.viewType == ViewType.grid ? Icons.view_list : Icons.grid_view,color: Colors.white,),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (viewModel.viewType == ViewType.grid)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    log("Additional Action");
+                  },
+                  backgroundColor: Colors.orange,
+                  tooltip: "Additional Action",
+                  child: const Icon(CupertinoIcons.shopping_cart, color: Colors.white),
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () => viewModel.toggleViewType(),
+                backgroundColor: Colors.orange,
+                tooltip: viewModel.viewType == ViewType.grid ? "Switch to List View" : "Switch to Grid View",
+                child: Icon(viewModel.viewType == ViewType.grid ? Icons.view_list : Icons.grid_view,color: Colors.white,),
+              ),
+            ],
           ),
         );
       } 

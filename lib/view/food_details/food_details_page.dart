@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/food_model.dart';
+import '../../view_model/search_food_view_model.dart';
 
 class FoodDetails extends StatefulWidget {
   final Food food;
@@ -27,7 +29,7 @@ class _FoodDetailsState extends State<FoodDetails> {
               child: Image.asset(
                 widget.food.thumNailAssetPath,
                 width: double.infinity,
-                height: 200,
+                height: 170,
                 fit: BoxFit.cover,
               ),
             ),
@@ -35,39 +37,56 @@ class _FoodDetailsState extends State<FoodDetails> {
             Text(
               widget.food.name,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10),
-            Text(description, maxLines: 4,style: TextStyle(fontSize: 16, color: Colors.grey[700], ),),
-            const Spacer(),
+            Text(description, maxLines: 4,style: TextStyle(fontSize: 14, color: Colors.grey[700], ),),
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Icon(Icons.store_outlined,color: Colors.yellow[800],size: 25,),
+                const SizedBox(width: 2,),
+                Text(widget.food.businessName, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,color: Colors.grey[900], ) ),
+                const SizedBox(width: 8,),
+                Icon(Icons.circle,color: Colors.grey[900],size: 5),
+                const SizedBox(width: 4,),
+                Text('5 km away', style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,color: Colors.grey[700], ) )
+              ]
+            ),
+            const Spacer(),
+            Consumer<FoodViewModel>(
+              builder: (context, viewModel, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => viewModel.setCartItems(widget.food),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      ),
+                      child: const Text( 'Add to Cart', style: TextStyle(color: Colors.black),),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
-                  child: const Text( 'Add to Cart', style: TextStyle(color: Colors.black),),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow[700],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow[700],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      ),
+                      child: const Text('Order', style: TextStyle(color: Colors.white),),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
-                  child: const Text('Order', style: TextStyle(color: Colors.white),),
-                ),
-              ],
+                  ],
+                );
+              }
             ),
           ],
         ),
