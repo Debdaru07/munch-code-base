@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../helpers/helper_widget.dart';
 import '../model/food_model.dart';
 import '../view_model/search_food_view_model.dart';
 
@@ -49,7 +50,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
                 )
               ],
             ),),
-          body: foodList.isEmpty? const Center(child: Text('No items found')): viewModel.loading == true ? const Center(child: Text('Loading ...')) : viewType(viewModel, foodList),
+          body: foodList.isEmpty? const Center(child: Text('No items found')): viewModel.loading == true ? const FoodLoader() : viewType(viewModel, foodList),
           floatingActionButton: FloatingActionButton(
             onPressed: () => viewModel.toggleViewType(),
             backgroundColor: Colors.orange,
