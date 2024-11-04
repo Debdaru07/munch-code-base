@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../model/food_model.dart';
 
+enum ViewType { list, grid }
+
 class FoodViewModel extends ChangeNotifier {
 
   List<Food> foodItems = [
@@ -42,4 +44,12 @@ class FoodViewModel extends ChangeNotifier {
     setFoodItems(searchItems);
     notifyListeners();
   }
+  
+  ViewType _viewType = ViewType.grid;
+  ViewType get viewType => _viewType;
+  void toggleViewType() {
+    _viewType = _viewType == ViewType.grid ? ViewType.list : ViewType.grid;
+    notifyListeners();
+  }
+
 }
