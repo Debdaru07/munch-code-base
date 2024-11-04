@@ -32,7 +32,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
               prefixIcon: Icon(Icons.search,color: Colors.grey,),
             ),
           ),),
-          body: Expanded(child: foodList.isEmpty? const Center(child: Text('No items found')): viewType(viewModel, foodList)),
+          body: foodList.isEmpty? const Center(child: Text('No items found')): viewType(viewModel, foodList),
           floatingActionButton: Consumer<FoodViewModel>(
             builder: (context, viewModel, child) {
               return FloatingActionButton(
