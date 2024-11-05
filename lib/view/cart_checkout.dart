@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../model/food_model.dart';
 
 class CartCheckout extends StatefulWidget {
@@ -11,103 +10,240 @@ class CartCheckout extends StatefulWidget {
 }
 
 class _CartCheckoutState extends State<CartCheckout> {
+  Map<String, List<Food>> items = {};
+
+  @override
+  void initState() {
+    items = groupCartItemsByName(widget.cartItems);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: const Text('Checkout'), backgroundColor: Colors.yellow,),
-      body: SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Checkout',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(
-            //   height: MediaQuery.of(context).size.height * 0.13,
-            //   child: ListView.builder(
-            //     itemCount: widget.cartItems.length, 
-            //     itemBuilder: (context, index) {
-            //       final item = widget.cartItems[index];
-            //       return ListTile(
-            //         title: Text(item.name), 
-            //         trailing: Row(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: [
-            //             IconButton(
-            //               onPressed: () { },
-            //               icon: const Icon(Icons.remove),
-            //             ),
-            //             Expanded(
-            //               child: ConstrainedBox(
-            //                 constraints: const BoxConstraints( maxHeight: 100.0,),
-            //                 child: Text(widget.cartItems.length.toString()),
-            //               ),
-            //             ),
-            //             IconButton(
-            //               onPressed: () {},
-            //               icon: const Icon(Icons.add),
-            //             ),
-            //             Text('\$${item.price * int.parse(widget.cartItems.length.toString())}'),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
-            const Divider(),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6.0),
-              child: Text(
-                'Order Summary',
-                style: TextStyle(fontWeight: FontWeight.bold),
+            Expanded(
+              child: ListView.builder(
+              itemCount: items.keys.toList().length,
+              itemBuilder: (context, index) {
+                String foodName = items.keys.toList()[index];
+                List<Food> foods = items[foodName]!;
+                return _buildCartItem(foodName, double.tryParse(foods[0].price) ?? 0, foods.length);
+              }
+            )),
+            const SizedBox(height: 20),
+            _buildOrderSummary(),
+            const SizedBox(height: 20),
+            _buildPromoCodeInput(),
+            const SizedBox(height: 20),
+            _buildPaymentMethodSection(),
+            const Spacer(),
+            _buildDeliveryAddress(),
+            const SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange, 
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 80),
+                ),
+                child: const Text('Proceed to Payment',style: TextStyle(color: Colors.white, letterSpacing: 0.7, fontSize: 16),),
               ),
             ),
-            // _buildOrderSummary(widget.cartItems),
-            const SizedBox(height: 16.0),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter promo code',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            const Text('Payment Method'),
-            const ListTile(
-              title: Text('Credit Card'),
-              trailing: Icon(Icons.arrow_drop_down),
-            ),
-            const ListTile(
-              title: Text('PayPal'),
-              trailing: Icon(Icons.arrow_drop_down),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-              },
-              child: const Text('Proceed to Payment'),
-            ),
-            const SizedBox(height: 16.0),
-            const Text('Delivery Address'),
-            const Text('123 Main St, Springfield'),
-            const Text('Need Help? Contact Support'),
-            const Text('Terms and Conditions'),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOrderSummary(List<Food> items) {
-    double total = 0;
-    for (final item in items) {
-      total += double.parse(item.price) * double.parse(widget.cartItems.length.toString());
-    }
+  Widget _buildCartItem(String name, double price, int quantity) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text('\$$price', style: const TextStyle(color: Colors.red)),
+            ],
+          ),
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.remove_circle_outline),
+                onPressed: () {
+                  // Decrease quantity logic
+                },
+              ),
+              Text(quantity.toString(), style: const TextStyle(fontSize: 16)),
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline),
+                onPressed: () {
+                  // Increase quantity logic
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
+  Widget _buildOrderSummary() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Order Summary', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          _buildOrderSummaryItem('Margherita Pizza', 12.99),
+          _buildOrderSummaryItem('Caesar Salad', 17.00),
+          const Divider(),
+          _buildOrderSummaryItem('Total Amount', 29.99, isTotal: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderSummaryItem(String name, double price, {bool isTotal = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            name,
+            style: TextStyle(fontSize: isTotal ? 16 : 14, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+          ),
+          Text(
+            '\$${price.toStringAsFixed(2)}',
+            style: TextStyle(fontSize: isTotal ? 16 : 14, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPromoCodeInput() {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: 'Enter promo code',
+        filled: true,
+        fillColor: Colors.grey[200],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMethodSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ...items.map((item) => Text('${item.name} \$${item.price * int.parse(widget.cartItems.length.toString())}')),
-        const SizedBox(height: 8.0),
-        const Text('Total Amount'),
-        Text('\$${total.toStringAsFixed(2)}'),
+        const Text('Payment Method', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+        DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey[200],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          value: 'Credit Card',
+          onChanged: (value) {
+            // Handle payment method change
+          },
+          items: ['Credit Card', 'PayPal'].map((method) {
+            return DropdownMenuItem(
+              value: method,
+              child: Text(method),
+            );
+          }).toList(),
+        ),
       ],
     );
   }
 
+  Widget _buildDeliveryAddress() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          decoration: InputDecoration(
+            hintText: '123 Main St, Springfield',
+            filled: true,
+            fillColor: Colors.grey[200],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: const Text('Need Help? Contact Support', style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.normal)),
+              ),
+              InkWell(
+                onTap: () {},
+                child: const Text('Terms and Conditions', style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.normal)),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+
+Map<String, List<Food>> groupCartItemsByName(List<Food> cartItems) {
+  Map<String, List<Food>> groupedItems = {};
+
+  for (var item in cartItems) {
+    if (groupedItems.containsKey(item.name)) {
+      groupedItems[item.name]!.add(item);
+    } else {
+      groupedItems[item.name] = [item];
+    }
+  }
+
+  return groupedItems;
 }
