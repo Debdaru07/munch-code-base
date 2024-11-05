@@ -80,7 +80,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                      onPressed: () async =>  { viewModel.setCartItems(widget.food), Navigator.pop(context)},
+                      onPressed: () async =>  { viewModel.setCartItems(widget.food), Navigator.pop(context), showCustomSnackbar(context, text: 'Added to cart')},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[300],
                         shape: RoundedRectangleBorder(
