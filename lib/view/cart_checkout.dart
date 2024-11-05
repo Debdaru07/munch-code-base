@@ -42,8 +42,8 @@ class _CartCheckoutState extends State<CartCheckout> {
               width: double.infinity,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height * 0.1, // Minimum height
-                  maxHeight: MediaQuery.of(context).size.height * 0.22, // Maximum height
+                  minHeight: MediaQuery.of(context).size.height * 0.05, // Minimum height
+                  maxHeight: MediaQuery.of(context).size.height * 0.13, // Maximum height
                 ),
                 child: ListView.builder(
                 itemCount: items.keys.toList().length,
@@ -54,31 +54,34 @@ class _CartCheckoutState extends State<CartCheckout> {
                 }
               )),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             _buildOrderSummary(items,context),
             const SizedBox(height: 20),
             _buildPromoCodeInput(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             _buildPaymentMethodSection(),
-            const Spacer(),
+            const SizedBox(height: 25),
+            Text('Address', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.grey[700]),),
+            const SizedBox(height: 2),
             _buildDeliveryAddress(),
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange, 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 80),
-                ),
-                child: const Text('Proceed to Payment',style: TextStyle(color: Colors.white, letterSpacing: 0.7, fontSize: 16),),
-              ),
-            ),
           ],
         ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepOrange, 
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 60),
+            ),
+            child: const Text('Proceed to Payment',style: TextStyle(color: Colors.white, letterSpacing: 0.7, fontSize: 16),),
+          ),
+        ],
       ),
     );
   }
@@ -241,11 +244,11 @@ class _CartCheckoutState extends State<CartCheckout> {
             children: [
               InkWell(
                 onTap: () {},
-                child: const Text('Need Help? Contact Support', style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.normal)),
+                child: const Text('Need Help? Contact Support', style: TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.normal)),
               ),
               InkWell(
                 onTap: () {},
-                child: const Text('Terms and Conditions', style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.normal)),
+                child: const Text('Terms and Conditions', style: TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.normal)),
               ),
             ],
           ),
