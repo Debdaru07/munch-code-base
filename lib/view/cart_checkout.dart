@@ -35,36 +35,38 @@ class _CartCheckoutState extends State<CartCheckout> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height * 0.05, // Minimum height
-                  maxHeight: MediaQuery.of(context).size.height * 0.13, // Maximum height
-                ),
-                child: ListView.builder(
-                itemCount: items.keys.toList().length,
-                itemBuilder: (context, index) {
-                  String foodName = items.keys.toList()[index];
-                  List<Food> foods = items[foodName]!;
-                  return _buildCartItem(foodName, double.tryParse(foods[0].price) ?? 0, foods.length);
-                }
-              )),
-            ),
-            const SizedBox(height: 10),
-            _buildOrderSummary(items,context),
-            const SizedBox(height: 20),
-            _buildPromoCodeInput(),
-            const SizedBox(height: 10),
-            _buildPaymentMethodSection(),
-            const SizedBox(height: 25),
-            Text('Address', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.grey[700]),),
-            const SizedBox(height: 2),
-            _buildDeliveryAddress(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height * 0.05, // Minimum height
+                    maxHeight: MediaQuery.of(context).size.height * 0.3, // Maximum height
+                  ),
+                  child: ListView.builder(
+                  itemCount: items.keys.toList().length,
+                  itemBuilder: (context, index) {
+                    String foodName = items.keys.toList()[index];
+                    List<Food> foods = items[foodName]!;
+                    return _buildCartItem(foodName, double.tryParse(foods[0].price) ?? 0, foods.length);
+                  }
+                )),
+              ),
+              const SizedBox(height: 10),
+              _buildOrderSummary(items,context),
+              const SizedBox(height: 20),
+              _buildPromoCodeInput(),
+              const SizedBox(height: 10),
+              _buildPaymentMethodSection(),
+              const SizedBox(height: 25),
+              Text('Address', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.grey[700]),),
+              const SizedBox(height: 2),
+              _buildDeliveryAddress(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Row(
@@ -137,7 +139,7 @@ class _CartCheckoutState extends State<CartCheckout> {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: MediaQuery.of(context).size.height * 0.08,
-                maxHeight: MediaQuery.of(context).size.height * 0.12,
+                maxHeight: MediaQuery.of(context).size.height * 0.2,
               ),
               child: ListView.builder(
                 itemCount: items.keys.toList().length,
