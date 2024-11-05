@@ -5,6 +5,11 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1' // Update to the latest version if necessary
+    implementation 'androidx.core:core-ktx:1.12.0' // Update to the latest version if necessary
+}
+
 android {
     namespace = "com.example.munch"
     compileSdk = flutter.compileSdkVersion
