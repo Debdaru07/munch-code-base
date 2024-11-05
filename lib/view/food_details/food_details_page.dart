@@ -34,12 +34,28 @@ class _FoodDetailsState extends State<FoodDetails> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              widget.food.name,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Text(
+                  widget.food.name,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange
+                  ),
+                ),
+                const SizedBox(width: 10,),
+                Icon(Icons.circle,color: Colors.grey[800],size: 8),
+                const SizedBox(width: 2,),
+                Text(
+                  '\$${widget.food.price}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[700]
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Text(description, maxLines: 4,style: TextStyle(fontSize: 14, color: Colors.grey[700], ),),
@@ -63,7 +79,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                      onPressed: () => viewModel.setCartItems(widget.food),
+                      onPressed: () async =>  { viewModel.setCartItems(widget.food), Navigator.pop(context)},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[300],
                         shape: RoundedRectangleBorder(
