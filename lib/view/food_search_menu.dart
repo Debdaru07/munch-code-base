@@ -71,7 +71,7 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
                     FloatingActionButton(
                       heroTag: 'cartCheckoutButton',
                       onPressed: () async {
-                        await Navigator.push( context, MaterialPageRoute( builder: (context) => CartCheckout(cartItems: viewModel.cartItems,), ),);
+                        await Navigator.push( context, MaterialPageRoute( builder: (context) => const CartCheckout(), ),);
                       },
                       backgroundColor: Colors.orange,
                       child: const Icon(CupertinoIcons.shopping_cart, color: Colors.white),
