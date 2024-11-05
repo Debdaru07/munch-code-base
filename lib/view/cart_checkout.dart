@@ -14,52 +14,52 @@ class _CartCheckoutState extends State<CartCheckout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: const Text('Checkout'),),
+      appBar: AppBar( title: const Text('Checkout'), backgroundColor: Colors.yellow,),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.13,
-              child: ListView.builder(
-                itemCount: widget.cartItems.length, 
-                itemBuilder: (context, index) {
-                  final item = widget.cartItems[index];
-                  return ListTile(
-                    title: Text(item.name), 
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () { },
-                          icon: const Icon(Icons.remove),
-                        ),
-                        Expanded(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints( maxHeight: 100.0,),
-                            child: Text(widget.cartItems.length.toString()),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.add),
-                        ),
-                        Text('\$${item.price * int.parse(widget.cartItems.length.toString())}'),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            // Container(
+            //   height: MediaQuery.of(context).size.height * 0.13,
+            //   child: ListView.builder(
+            //     itemCount: widget.cartItems.length, 
+            //     itemBuilder: (context, index) {
+            //       final item = widget.cartItems[index];
+            //       return ListTile(
+            //         title: Text(item.name), 
+            //         trailing: Row(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             IconButton(
+            //               onPressed: () { },
+            //               icon: const Icon(Icons.remove),
+            //             ),
+            //             Expanded(
+            //               child: ConstrainedBox(
+            //                 constraints: const BoxConstraints( maxHeight: 100.0,),
+            //                 child: Text(widget.cartItems.length.toString()),
+            //               ),
+            //             ),
+            //             IconButton(
+            //               onPressed: () {},
+            //               icon: const Icon(Icons.add),
+            //             ),
+            //             Text('\$${item.price * int.parse(widget.cartItems.length.toString())}'),
+            //           ],
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
             const Divider(),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.symmetric(vertical: 6.0),
               child: Text(
                 'Order Summary',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            _buildOrderSummary(widget.cartItems),
+            // _buildOrderSummary(widget.cartItems),
             const SizedBox(height: 16.0),
             const TextField(
               decoration: InputDecoration(

@@ -67,12 +67,28 @@ class _FoodDeliveryListingState extends State<FoodDeliveryListing> {
               if (viewModel.cartItems.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: FloatingActionButton(
-                  onPressed: () async {
-                    // await Navigator.push( context, MaterialPageRoute( builder: (context) => CartCheckout(cartItems: viewModel.cartItems,), ),);
-                  },
-                  backgroundColor: Colors.orange,
-                  child: const Icon(CupertinoIcons.shopping_cart, color: Colors.white),
+                child: Stack(
+                  clipBehavior: Clip.none, 
+                  children: [
+                    FloatingActionButton(
+                      onPressed: () async {
+                        await Navigator.push( context, MaterialPageRoute( builder: (context) => CartCheckout(cartItems: viewModel.cartItems,), ),);
+                      },
+                      backgroundColor: Colors.orange,
+                      child: const Icon(CupertinoIcons.shopping_cart, color: Colors.white),
+                    ),
+                    if (viewModel.cartItems.isNotEmpty) 
+                    Positioned( right: -6, top: -6,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text('${viewModel.cartItems.length}', style: const TextStyle( color: Colors.orange, fontSize: 12, fontWeight: FontWeight.bold, ),),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               FloatingActionButton(
