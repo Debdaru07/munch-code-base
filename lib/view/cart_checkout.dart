@@ -38,15 +38,22 @@ class _CartCheckoutState extends State<CartCheckout> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: ListView.builder(
-              itemCount: items.keys.toList().length,
-              itemBuilder: (context, index) {
-                String foodName = items.keys.toList()[index];
-                List<Food> foods = items[foodName]!;
-                return _buildCartItem(foodName, double.tryParse(foods[0].price) ?? 0, foods.length);
-              }
-            )),
+            SizedBox(
+              width: double.infinity,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height * 0.1, // Minimum height
+                  maxHeight: MediaQuery.of(context).size.height * 0.22, // Maximum height
+                ),
+                child: ListView.builder(
+                itemCount: items.keys.toList().length,
+                itemBuilder: (context, index) {
+                  String foodName = items.keys.toList()[index];
+                  List<Food> foods = items[foodName]!;
+                  return _buildCartItem(foodName, double.tryParse(foods[0].price) ?? 0, foods.length);
+                }
+              )),
+            ),
             const SizedBox(height: 20),
             _buildOrderSummary(items,context),
             const SizedBox(height: 20),
@@ -124,11 +131,10 @@ class _CartCheckoutState extends State<CartCheckout> {
         children: [
           SizedBox(
             width: double.infinity,
-            height: 150,
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height * 0.15, // Minimum height
-                maxHeight: MediaQuery.of(context).size.height * 0.35, // Maximum height
+                minHeight: MediaQuery.of(context).size.height * 0.08,
+                maxHeight: MediaQuery.of(context).size.height * 0.12,
               ),
               child: ListView.builder(
                 itemCount: items.keys.toList().length,
@@ -141,6 +147,7 @@ class _CartCheckoutState extends State<CartCheckout> {
               ),
             ),
           ),
+          const Divider(),
           _buildOrderSummaryItem('Total Amount', totalAmount, isTotal: true),
         ],
       ),
