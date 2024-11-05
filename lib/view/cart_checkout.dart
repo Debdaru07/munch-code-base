@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../helpers/snackbar_bottom.dart';
 import '../model/food_model.dart';
 
 class CartCheckout extends StatefulWidget {
@@ -73,7 +74,10 @@ class _CartCheckoutState extends State<CartCheckout> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              Navigator.pop(context);
+              showCustomSnackbar(context, text: 'Order placed successfully');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepOrange, 
               shape: RoundedRectangleBorder(
