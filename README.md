@@ -10,7 +10,7 @@ The Nearby Food Finder app aims to enhance developer engagement during the upcom
     - Real-Time Results: Provide up-to-date information about nearby places offering both pizza and juice.
 
 * Features 
-    - App Icon, which was generated from a text to Image AI.
+    - App Icon, which was generated from a text to Image AI, both as the icon and as the splash-screen.
     - The same app icon, which i have used in the Loading Effect with rotations.
     - Snackbars which adds up to the UI with friendly notificiations.
     - State-Management using MVVM-architecture.
