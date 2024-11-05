@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/snackbar_bottom.dart';
 import '../../model/food_model.dart';
 import '../../view_model/search_food_view_model.dart';
 
@@ -90,8 +91,9 @@ class _FoodDetailsState extends State<FoodDetails> {
                       child: const Text( 'Add to Cart', style: TextStyle(color: Colors.black),),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pop(context);
+                        showCustomSnackbar(context, text: 'Order placed successfully');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.yellow[700],
