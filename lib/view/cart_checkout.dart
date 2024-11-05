@@ -48,7 +48,7 @@ class _CartCheckoutState extends State<CartCheckout> {
               }
             )),
             const SizedBox(height: 20),
-            _buildOrderSummary(),
+            _buildOrderSummary(items,context),
             const SizedBox(height: 20),
             _buildPromoCodeInput(),
             const SizedBox(height: 20),
@@ -111,7 +111,8 @@ class _CartCheckoutState extends State<CartCheckout> {
     );
   }
 
-  Widget _buildOrderSummary() {
+  Widget _buildOrderSummary(Map<String, List<Food>> items,context) {
+    double totalAmount = 0.0;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -121,12 +122,26 @@ class _CartCheckoutState extends State<CartCheckout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Order Summary', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
-          _buildOrderSummaryItem('Margherita Pizza', 12.99),
-          _buildOrderSummaryItem('Caesar Salad', 17.00),
-          const Divider(),
-          _buildOrderSummaryItem('Total Amount', 29.99, isTotal: true),
+          SizedBox(
+            width: double.infinity,
+            height: 150,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height * 0.15, // Minimum height
+                maxHeight: MediaQuery.of(context).size.height * 0.35, // Maximum height
+              ),
+              child: ListView.builder(
+                itemCount: items.keys.toList().length,
+                itemBuilder: (context, index) {
+                  String foodName = items.keys.toList()[index];
+                  List<Food> foods = items[foodName]!;
+                  totalAmount += double.tryParse(foods[0].price) ?? 0;
+                  return _buildOrderSummaryItem(foodName, double.tryParse(foods[0].price) ?? 0,);
+                }
+              ),
+            ),
+          ),
+          _buildOrderSummaryItem('Total Amount', totalAmount, isTotal: true),
         ],
       ),
     );
